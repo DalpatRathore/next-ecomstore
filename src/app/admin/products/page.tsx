@@ -15,7 +15,8 @@ import {
   CheckCircle2,
   Download,
   Edit,
-  Edit3,
+  Ellipsis,
+  ListChecks,
   MoreVertical,
   XCircle,
 } from "lucide-react";
@@ -33,11 +34,12 @@ import {
   DeleteDropdownItem,
 } from "./_components/ProductActions";
 import { Card } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const ProductsPage = () => {
   return (
     <>
-      <div className="flex justify-between items-center gap-4">
+      <div className="flex justify-between items-center gap-4 border-b-2 mb-10">
         <PageHeader>Products</PageHeader>
         <Button asChild>
           <Link href="/admin/products/new">Add Product</Link>
@@ -56,6 +58,7 @@ async function ProductsTable() {
       id: true,
       name: true,
       priceInCents: true,
+      imagePath: true,
       inStock: true,
       _count: { select: { orders: true } },
     },
@@ -72,16 +75,22 @@ async function ProductsTable() {
   return (
     <Table>
       <TableHeader>
-        <TableRow>
+        <TableRow className="text-base">
           <TableHead className="w-0">
+            <ListChecks className="w-5 h-5"></ListChecks>
             <span className="sr-only">Available For Purchase</span>
           </TableHead>
           <TableHead>Name</TableHead>
           <TableHead>Price</TableHead>
           <TableHead>Orders</TableHead>
+          <TableHead>Product</TableHead>
           <TableHead className="w-0">
+            <Ellipsis className="w-5 h-5"></Ellipsis>
             <span className="sr-only">Actions</span>
           </TableHead>
+          {/* <TableHead className="w-0">
+            <span className="sr-only">Actions</span>
+          </TableHead> */}
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -103,6 +112,12 @@ async function ProductsTable() {
             <TableCell>{product.name}</TableCell>
             <TableCell>{formatCurrency(product.priceInCents / 100)}</TableCell>
             <TableCell>{formatNumber(product._count.orders)}</TableCell>
+            <TableCell>
+              <Avatar>
+                <AvatarImage src={product.imagePath}></AvatarImage>
+                <AvatarFallback></AvatarFallback>
+              </Avatar>
+            </TableCell>
             <TableCell>
               <DropdownMenu>
                 <DropdownMenuTrigger>
