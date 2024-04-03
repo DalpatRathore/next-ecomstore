@@ -15,7 +15,7 @@ const ProductForm = () => {
   const [error, action] = useFormState(addProduct, {});
 
   return (
-    <form action={action} className="space-y-8 w-full max-w-lg mx-auto">
+    <form action={action} className="space-y-5 w-full max-w-lg mx-auto mb-10">
       <div className="space-y-2">
         <Label htmlFor="name">Name</Label>
         <Input type="text" id="name" name="name" required></Input>
@@ -65,7 +65,7 @@ export default ProductForm;
 const SubmitButton = () => {
   const { pending } = useFormStatus();
   return (
-    <Button disabled={pending} type="submit">
+    <Button disabled={pending} type="submit" className="w-full">
       {pending ? "Saving..." : "Save"}
     </Button>
   );

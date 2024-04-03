@@ -7,6 +7,7 @@ import {
   toggleProductAvailability,
 } from "../../_actions/product";
 import { useRouter } from "next/navigation";
+import { ShieldCheck, ShieldClose, Trash2 } from "lucide-react";
 
 export const ActiveToggleDropdownItem = ({
   id,
@@ -28,6 +29,11 @@ export const ActiveToggleDropdownItem = ({
         });
       }}
     >
+      {!inStock ? (
+        <ShieldCheck className="w-4 h-4 mr-2"></ShieldCheck>
+      ) : (
+        <ShieldClose className="w-4 h-4 mr-2"></ShieldClose>
+      )}
       {inStock ? "Deactive" : "Activate"}
     </DropdownMenuItem>
   );
@@ -53,6 +59,7 @@ export const DeleteDropdownItem = ({
         });
       }}
     >
+      <Trash2 className="w-4 h-4 mr-2"></Trash2>
       Delete
     </DropdownMenuItem>
   );

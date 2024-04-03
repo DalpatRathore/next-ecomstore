@@ -11,7 +11,14 @@ import {
 } from "@/components/ui/table";
 import db from "@/db/db";
 
-import { CheckCircle2, MoreVertical, XCircle } from "lucide-react";
+import {
+  CheckCircle2,
+  Download,
+  Edit,
+  Edit3,
+  MoreVertical,
+  XCircle,
+} from "lucide-react";
 import { formatCurrency, formatNumber } from "@/lib/formatters";
 
 import {
@@ -57,7 +64,7 @@ async function ProductsTable() {
 
   if (products.length === 0)
     return (
-      <Card className="h-96 w-full flex items-center justify-center mt-10">
+      <Card className="h-full w-full flex items-center justify-center mt-10">
         <p className="text-muted-foreground italic">No products found!</p>
       </Card>
     );
@@ -84,7 +91,7 @@ async function ProductsTable() {
               {product.inStock ? (
                 <>
                   <span className="sr-only">Available</span>
-                  <CheckCircle2 />
+                  <CheckCircle2 className="stroke-green-500" />
                 </>
               ) : (
                 <>
@@ -105,11 +112,13 @@ async function ProductsTable() {
                 <DropdownMenuContent>
                   <DropdownMenuItem asChild>
                     <a download href={`/admin/products/${product.id}/download`}>
+                      <Download className="w-4 h-4 mr-2"></Download>
                       Download
                     </a>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link href={`/admin/products/${product.id}/edit`}>
+                      <Edit className="w-4 h-4 mr-2"></Edit>
                       Edit
                     </Link>
                   </DropdownMenuItem>
