@@ -25,6 +25,7 @@ import {
   ActiveToggleDropdownItem,
   DeleteDropdownItem,
 } from "./_components/ProductActions";
+import { Card } from "@/components/ui/card";
 
 const ProductsPage = () => {
   return (
@@ -54,7 +55,12 @@ async function ProductsTable() {
     orderBy: { name: "asc" },
   });
 
-  if (products.length === 0) return <p>No products found</p>;
+  if (products.length === 0)
+    return (
+      <Card className="h-96 w-full flex items-center justify-center mt-10">
+        <p className="text-muted-foreground italic">No products found!</p>
+      </Card>
+    );
 
   return (
     <Table>
