@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import db from "@/db/db";
 import { formatCurrency } from "@/lib/formatters";
+import { Download } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -47,9 +48,15 @@ const PurchaseSuccessPage = async ({
           <div className="line-clamp-3 text-muted-foreground">
             {product.description}
           </div>
-          <Button asChild size={"lg"}>
+          <Button asChild size={"lg"} className="w-full max-w-xs">
             {isSuccess ? (
-              <a href=""></a>
+              <a
+                href={`/products/download/${await createDownloadVerification(
+                  product.id
+                )}`}
+              >
+                <Download className="w-4 h-4 mr-2"></Download> Download
+              </a>
             ) : (
               <Link href={`/products/${product.id}/purchase`}>Try Again</Link>
             )}
@@ -60,3 +67,14 @@ const PurchaseSuccessPage = async ({
   );
 };
 export default PurchaseSuccessPage;
+
+async function createDownloadVerification(productId: string) {
+  return (
+    await db.downloadVerification.create({
+      data: {
+        productId,
+        expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24),
+      },
+    })
+  ).id;
+}
