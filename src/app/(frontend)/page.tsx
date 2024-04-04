@@ -1,13 +1,15 @@
-import ProductCard from "@/components/ProductCard";
+import ProductCard, { ProductCardSkeleton } from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import db from "@/db/db";
 import { Product } from "@prisma/client";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { Suspense } from "react";
 
 const getLastestProducts = async () => {
-  return await db.product.findMany({
+  await wait(1000);
+  return db.product.findMany({
     where: { inStock: true },
     orderBy: {
       createdAt: "desc",
@@ -16,7 +18,8 @@ const getLastestProducts = async () => {
   });
 };
 const getFeaturedProducts = async () => {
-  return await db.product.findMany({
+  await wait(2000);
+  return db.product.findMany({
     where: { inStock: true },
     orderBy: {
       orders: { _count: "desc" },
@@ -24,6 +27,11 @@ const getFeaturedProducts = async () => {
     take: 6,
   });
 };
+
+const wait = (duration: number) => {
+  return new Promise(resolve => setTimeout(resolve, duration));
+};
+
 export default function Home() {
   return (
     <main className="space-y-12">
@@ -34,7 +42,7 @@ export default function Home() {
       <Separator></Separator>
       <ProductGridSection
         title="Most Popular Products"
-        productFetcher={getLastestProducts}
+        productFetcher={getFeaturedProducts}
       ></ProductGridSection>
     </main>
   );
@@ -45,7 +53,7 @@ type ProductGridSectionProps = {
   productFetcher: () => Promise<Product[]>;
 };
 
-async function ProductGridSection({
+function ProductGridSection({
   title,
   productFetcher,
 }: ProductGridSectionProps) {
@@ -62,10 +70,28 @@ async function ProductGridSection({
       <Separator className="bg-muted"></Separator>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-        {(await productFetcher()).map(product => (
-          <ProductCard key={product.id} {...product}></ProductCard>
-        ))}
+        <Suspense
+          fallback={
+            <>
+              <ProductCardSkeleton></ProductCardSkeleton>
+              <ProductCardSkeleton></ProductCardSkeleton>
+              <ProductCardSkeleton></ProductCardSkeleton>
+            </>
+          }
+        >
+          <ProductSuspense productFetcher={productFetcher}></ProductSuspense>
+        </Suspense>
       </div>
     </div>
   );
+}
+
+async function ProductSuspense({
+  productFetcher,
+}: {
+  productFetcher: () => Promise<Product[]>;
+}) {
+  return (await productFetcher()).map(product => (
+    <ProductCard key={product.id} {...product}></ProductCard>
+  ));
 }
