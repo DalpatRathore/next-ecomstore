@@ -2,31 +2,41 @@ import ProductCard, { ProductCardSkeleton } from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import db from "@/db/db";
+import { cache } from "@/lib/cache";
 import { Product } from "@prisma/client";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
 
-const getLastestProducts = async () => {
-  await wait(1000);
-  return db.product.findMany({
-    where: { inStock: true },
-    orderBy: {
-      createdAt: "desc",
-    },
-    take: 6,
-  });
-};
-const getFeaturedProducts = async () => {
-  await wait(2000);
-  return db.product.findMany({
-    where: { inStock: true },
-    orderBy: {
-      orders: { _count: "desc" },
-    },
-    take: 6,
-  });
-};
+const getLastestProducts = cache(
+  async () => {
+    await wait(1000);
+    return db.product.findMany({
+      where: { inStock: true },
+      orderBy: {
+        createdAt: "desc",
+      },
+      take: 6,
+    });
+  },
+  ["/", "getLastestProducts"],
+  { revalidate: 60 * 60 * 24 }
+);
+
+const getFeaturedProducts = cache(
+  async () => {
+    await wait(2000);
+    return db.product.findMany({
+      where: { inStock: true },
+      orderBy: {
+        orders: { _count: "desc" },
+      },
+      take: 6,
+    });
+  },
+  ["/", "getFeaturedProducts"],
+  { revalidate: 60 * 60 * 24 }
+);
 
 const wait = (duration: number) => {
   return new Promise(resolve => setTimeout(resolve, duration));

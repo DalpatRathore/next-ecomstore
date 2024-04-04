@@ -1,18 +1,23 @@
 import ProductCard, { ProductCardSkeleton } from "@/components/ProductCard";
 import db from "@/db/db";
+import { cache } from "@/lib/cache";
 import { Suspense } from "react";
 
 const wait = async (duration: number) => {
   return new Promise(resolve => setTimeout(resolve, duration));
 };
 
-const getProducts = async () => {
-  await wait(1000);
-  return db.product.findMany({
-    where: { inStock: true },
-    orderBy: { name: "asc" },
-  });
-};
+const getProducts = cache(
+  async () => {
+    await wait(1000);
+    return db.product.findMany({
+      where: { inStock: true },
+      orderBy: { name: "asc" },
+    });
+  },
+  ["/products", "getProducts"],
+  { revalidate: 60 * 60 * 24 }
+);
 
 const ProductsPage = () => {
   return (
