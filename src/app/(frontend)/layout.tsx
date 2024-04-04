@@ -8,7 +8,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
       <Nav>
         <NavLinks href={"/"}>Home</NavLinks>
         <NavLinks href={"/products"}>Products</NavLinks>
-        <NavLinks href={"/orders"}>Sales</NavLinks>
+        <NavLinks href={"/orders"}>My Orders</NavLinks>
       </Nav>
       <div className="container my-6">{children}</div>
     </div>
