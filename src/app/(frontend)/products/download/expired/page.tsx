@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const ExpiredLinkPage = () => {
   return (
-    <div className="flex flex-col items-center justify-center gap-10  h-96">
+    <div className="flex flex-col items-center justify-center gap-5  h-40 lg:h-96">
       <h1 className="text-4xl mb-4 text-muted-foreground italic">
         Download link expired
       </h1>
