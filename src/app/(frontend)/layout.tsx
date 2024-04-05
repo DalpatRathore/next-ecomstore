@@ -4,7 +4,7 @@ export const dynamic = "force-dynamic";
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="min-h-[90%]">
+    <div className="min-h-[92%]">
       <Nav>
         <NavLinks href={"/"}>Home</NavLinks>
         <NavLinks href={"/products"}>Products</NavLinks>
