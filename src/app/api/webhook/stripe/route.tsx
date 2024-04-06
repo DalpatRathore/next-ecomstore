@@ -4,6 +4,7 @@ import Stripe from "stripe";
 
 import { Resend } from "resend";
 import { headers } from "next/headers";
+import PurchaseReceipts from "@/emails/PurchaseReceipts";
 
 const resend = new Resend(process.env.RESEND_API_KEY as string);
 
@@ -68,7 +69,13 @@ export async function POST(req: NextRequest) {
       from: `Support < ${process.env.SENDER_EMAIL} >`,
       to: email,
       subject: "Order Confirmation",
-      html: "<p>Congrats on sending your <strong>first email</strong>!</p>",
+      react: (
+        <PurchaseReceipts
+          order={order}
+          product={product}
+          downloadVerificationId={downloadVerification.id}
+        ></PurchaseReceipts>
+      ),
     });
   }
   return new NextResponse(null, { status: 200 });
