@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Ellipsis, MoreVertical } from "lucide-react";
+import { CircleUser, Ellipsis, ListChecks, MoreVertical } from "lucide-react";
 import { formatCurrency, formatNumber } from "@/lib/formatters";
 import {
   DropdownMenu,
@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { DeleteDropdownItem } from "./_components/UserActions";
 import { Card } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const getUsers = () => {
   return db.user.findMany({
@@ -55,10 +56,13 @@ export const UsersTable = async () => {
     <Table>
       <TableHeader>
         <TableRow className="text-base">
+          <TableHead className="w-0">
+            <ListChecks className="w-5 h-5"></ListChecks>
+          </TableHead>
           <TableHead>Email</TableHead>
           <TableHead>Orders</TableHead>
           <TableHead>Value</TableHead>
-          <TableHead>Product</TableHead>
+          {/* <TableHead>Product</TableHead> */}
           <TableHead className="w-0">
             <Ellipsis className="w-5 h-5"></Ellipsis>
             <span className="sr-only">Actions</span>
@@ -68,6 +72,9 @@ export const UsersTable = async () => {
       <TableBody>
         {users.map(user => (
           <TableRow key={user.id}>
+            <TableCell>
+              <CircleUser className="stroke-gray-500" />
+            </TableCell>
             <TableCell>{user.email}</TableCell>
             <TableCell>{formatNumber(user.orders.length)}</TableCell>
             <TableCell>
@@ -80,7 +87,7 @@ export const UsersTable = async () => {
             </TableCell>
             {/* <TableCell>
               <Avatar>
-                <AvatarImage src={product.imagePath}></AvatarImage>
+                <AvatarImage src={""}></AvatarImage>
                 <AvatarFallback></AvatarFallback>
               </Avatar>
             </TableCell> */}

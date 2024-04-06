@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Ellipsis, MoreVertical } from "lucide-react";
+import { DollarSign, Ellipsis, MoreVertical, Receipt } from "lucide-react";
 import { formatCurrency, formatNumber } from "@/lib/formatters";
 import {
   DropdownMenu,
@@ -56,6 +56,9 @@ export const OrdersTable = async () => {
     <Table>
       <TableHeader>
         <TableRow className="text-base">
+          <TableHead className="w-0">
+            <DollarSign className="w-4 h-4"></DollarSign>
+          </TableHead>
           <TableHead>Product</TableHead>
           <TableHead>Customer</TableHead>
           <TableHead>Price Paid</TableHead>
@@ -68,6 +71,9 @@ export const OrdersTable = async () => {
       <TableBody>
         {orders.map(order => (
           <TableRow key={order.id}>
+            <TableCell>
+              <Receipt className="w-4 h-4 stroke-gray-500" />
+            </TableCell>
             <TableCell>{order.product.name}</TableCell>
             <TableCell>{order.user.email}</TableCell>
             <TableCell>
