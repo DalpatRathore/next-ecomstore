@@ -42,7 +42,7 @@ const OrdersPage = () => {
 };
 export default OrdersPage;
 
-export const OrdersTable = async () => {
+const OrdersTable = async () => {
   const orders = await getOrders();
 
   if (orders.length === 0)

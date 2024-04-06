@@ -42,7 +42,7 @@ const UsersPage = () => {
 };
 export default UsersPage;
 
-export const UsersTable = async () => {
+const UsersTable = async () => {
   const users = await getUsers();
 
   if (users.length === 0)

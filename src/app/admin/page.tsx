@@ -94,11 +94,7 @@ type DashboardCardProps = {
   content: string;
 };
 
-export const DashboardCard = ({
-  title,
-  description,
-  content,
-}: DashboardCardProps) => {
+const DashboardCard = ({ title, description, content }: DashboardCardProps) => {
   return (
     <Card>
       <CardHeader>
