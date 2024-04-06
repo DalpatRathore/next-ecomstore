@@ -19,7 +19,7 @@ const OrdersPage = () => {
   const [data, action] = useFormState(emailOrderHistory, {});
   return (
     <>
-      <div className="flex justify-between items-center gap-4 border-b-2 mb-10">
+      <div className="flex justify-between items-center gap-4 border-b-2 mb-10 max-w-5xl mx-auto">
         <PageHeader>My Orders</PageHeader>
       </div>
       <form
@@ -43,7 +43,7 @@ const OrdersPage = () => {
           </CardContent>
           <CardFooter>
             {data.message ? (
-              <p className="textemerald-500">{data.message}</p>
+              <p className="text-emerald-500 italic">{data.message}</p>
             ) : (
               <SubmitButton></SubmitButton>
             )}
