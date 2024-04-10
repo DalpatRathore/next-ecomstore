@@ -1,6 +1,6 @@
 "use client";
 
-import emailOrderHistory from "@/actions/order";
+import emailOrderHistory from "@/actions/email-order";
 import PageHeader from "@/app/admin/_components/PageHeader";
 import { Button } from "@/components/ui/button";
 import {
