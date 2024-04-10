@@ -1,16 +1,19 @@
+import Header from "@/components/Header";
 import Nav, { NavLinks } from "@/components/Nav";
 
 export const dynamic = "force-dynamic";
 
+const navLinks = [
+  { href: "/admin", text: "Dashboard" },
+  { href: "/admin/products", text: "Products" },
+  { href: "/admin/users", text: "Customers" },
+  { href: "/admin/orders", text: "Sales" },
+];
+
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="min-h-[92%]">
-      <Nav>
-        <NavLinks href={"/admin"}>Dashboard</NavLinks>
-        <NavLinks href={"/admin/products"}>Products</NavLinks>
-        <NavLinks href={"/admin/users"}>Customers</NavLinks>
-        <NavLinks href={"/admin/orders"}>Sales</NavLinks>
-      </Nav>
+      <Header navLinks={navLinks}></Header>
       <div className="container my-6">{children}</div>
     </div>
   );
