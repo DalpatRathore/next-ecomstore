@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Nav, { NavLinks } from "./Nav";
+import ThemeToggle from "./ThemeToggle";
 
 interface HeaderProps {
   navLinks: { href: string; text: string }[];
@@ -8,7 +9,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ navLinks }) => {
   return (
-    <header className="flex w-full items-center justify-between bg-primary">
+    <header className="flex w-full items-center justify-between bg-gray-200 darK:bg-gray-900 px-5">
       <div className="logo">
         <Image
           src={"/logo.svg"}
@@ -26,6 +27,7 @@ const Header: React.FC<HeaderProps> = ({ navLinks }) => {
           </NavLinks>
         ))}
       </Nav>
+      <ThemeToggle></ThemeToggle>
     </header>
   );
 };

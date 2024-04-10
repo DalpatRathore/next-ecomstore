@@ -5,11 +5,7 @@ import { usePathname } from "next/navigation";
 import { ComponentProps } from "react";
 
 const Nav = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <nav className=" w-full text-primary-foreground flex justify-center px-4">
-      {children}
-    </nav>
-  );
+  return <nav className=" w-full flex justify-center px-4">{children}</nav>;
 };
 export default Nav;
 
