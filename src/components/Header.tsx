@@ -9,7 +9,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ navLinks }) => {
   return (
-    <header className="flex w-full items-center justify-between bg-gray-200 darK:bg-gray-900 px-5">
+    <header className="flex w-full items-center justify-between bg-gray-200 dark:bg-gray-900 px-5">
       <div className="logo">
         <Image
           src={"/logo.svg"}
