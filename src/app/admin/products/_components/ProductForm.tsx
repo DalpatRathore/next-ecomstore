@@ -23,36 +23,37 @@ const ProductForm = ({ product }: { product?: Product | null }) => {
 
   return (
     <form action={action} className="space-y-5 w-full mb-10">
-      <div className="flex gap-10 w-full">
-        <div className="w-full space-y-2">
-          <Label htmlFor="name">Name</Label>
-          <Input
-            type="text"
-            id="name"
-            name="name"
-            required
-            defaultValue={product?.name || ""}
-          ></Input>
-          {error.name && <div className="text-destructive">{error.name}</div>}
-        </div>
+      <div className="w-full space-y-2">
+        <Label htmlFor="name">Name</Label>
+        <Input
+          type="text"
+          id="name"
+          name="name"
+          required
+          defaultValue={product?.name || ""}
+        ></Input>
+        {error.name && <div className="text-destructive">{error.name}</div>}
+      </div>
 
-        <div className="w-full space-y-2">
-          <Label htmlFor="priceInCents">Price In Cents</Label>
+      <div className="w-full space-y-2">
+        <Label htmlFor="priceInCents">Price In Cents</Label>
+        <div className="flex items-center justify-between gap-2">
           <Input
             type="number"
             id="priceInCents"
             name="priceInCents"
             required
+            className="w-full"
             value={priceInCents}
             onChange={e => setPriceInCents(Number(e.target.value) || undefined)}
           ></Input>
-          <div className="text-muted-foreground">
+          <div className="text-muted-foreground w-full">
             {formatCurrency((priceInCents || 0) / 100)}
           </div>
-          {error.priceInCents && (
-            <div className="text-destructive">{error.priceInCents}</div>
-          )}
         </div>
+        {error.priceInCents && (
+          <div className="text-destructive">{error.priceInCents}</div>
+        )}
       </div>
       <div className="space-y-2">
         <Label htmlFor="description">Description</Label>
@@ -62,7 +63,6 @@ const ProductForm = ({ product }: { product?: Product | null }) => {
           required
           defaultValue={product?.description || ""}
           placeholder="Type your product description here."
-          className="h-40"
         ></Textarea>
         {error.description && (
           <div className="text-destructive">{error.description}</div>
