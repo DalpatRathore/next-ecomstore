@@ -1,5 +1,6 @@
 import ProductCard, { ProductCardSkeleton } from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import db from "@/db/db";
 import { cache } from "@/lib/cache";
@@ -101,6 +102,13 @@ async function ProductSuspense({
 }: {
   productFetcher: () => Promise<Product[]>;
 }) {
+  if (productFetcher.length === 0) {
+    return (
+      <Card className="h-40 md:h-96 w-full flex items-center justify-center mt-10">
+        <p className="text-muted-foreground italic">No products found!</p>
+      </Card>
+    );
+  }
   return (await productFetcher()).map(product => (
     <ProductCard key={product.id} {...product}></ProductCard>
   ));

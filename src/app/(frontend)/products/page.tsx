@@ -1,4 +1,5 @@
 import ProductCard, { ProductCardSkeleton } from "@/components/ProductCard";
+import { Card } from "@/components/ui/card";
 import db from "@/db/db";
 import { cache } from "@/lib/cache";
 import { Suspense } from "react";
@@ -43,6 +44,14 @@ export default ProductsPage;
 
 async function ProductSuspense() {
   const products = await getProducts();
+
+  if (products.length === 0) {
+    return (
+      <Card className="h-40 md:h-96 w-full flex items-center justify-center mt-10">
+        <p className="text-muted-foreground italic">No products found!</p>
+      </Card>
+    );
+  }
 
   return products.map(product => (
     <ProductCard key={product.id} {...product}></ProductCard>
