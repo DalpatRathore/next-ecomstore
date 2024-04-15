@@ -102,7 +102,7 @@ async function ProductSuspense({
 }: {
   productFetcher: () => Promise<Product[]>;
 }) {
-  if (productFetcher.length === 0) {
+  if ((await productFetcher()).length === 0) {
     return (
       <Card className="h-40 md:h-96 w-full flex items-center justify-center mt-10">
         <p className="text-muted-foreground italic">No products found!</p>
