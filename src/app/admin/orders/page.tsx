@@ -8,7 +8,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { DollarSign, Ellipsis, MoreVertical, Receipt } from "lucide-react";
+import {
+  DollarSign,
+  Ellipsis,
+  Minus,
+  MoreVertical,
+  Receipt,
+} from "lucide-react";
 import { formatCurrency } from "@/lib/formatters";
 import {
   DropdownMenu,
@@ -26,6 +32,7 @@ const getOrders = () => {
       pricePaidInCents: true,
       product: { select: { name: true } },
       user: { select: { email: true } },
+      discountCode: { select: { code: true } },
     },
     orderBy: { createdAt: "desc" },
   });
@@ -61,6 +68,7 @@ const OrdersTable = async () => {
           <TableHead>Product</TableHead>
           <TableHead>Customer</TableHead>
           <TableHead>Price Paid</TableHead>
+          <TableHead>Coupon</TableHead>
           <TableHead className="w-0">
             {/* <Ellipsis className="w-5 h-5"></Ellipsis> */}
             <span className="sr-only">Actions</span>
@@ -78,12 +86,13 @@ const OrdersTable = async () => {
             <TableCell>
               {formatCurrency(order.pricePaidInCents / 100)}
             </TableCell>
-            {/* <TableCell>
-              <Avatar>
-                <AvatarImage src={product.imagePath}></AvatarImage>
-                <AvatarFallback></AvatarFallback>
-              </Avatar>
-            </TableCell> */}
+            <TableCell>
+              {order.discountCode == null ? (
+                <Minus></Minus>
+              ) : (
+                order.discountCode.code
+              )}
+            </TableCell>
             <TableCell className="text-center">
               <DropdownMenu>
                 <DropdownMenuTrigger>
