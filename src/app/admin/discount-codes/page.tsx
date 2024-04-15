@@ -36,6 +36,7 @@ import {
   ActiveToggleDropdownItem,
   DeleteDropdownItem,
 } from "./_components/DiscountCodeActions";
+import { cn } from "@/lib/utils";
 
 const WHERE_EXPIRED: Prisma.DiscountCodeWhereInput = {
   OR: [
@@ -188,7 +189,9 @@ async function DiscountCodesTable({
                       isActive={discountCode.isActive}
                     />
                   )}
-                  <DropdownMenuSeparator />
+                  <DropdownMenuSeparator
+                    className={cn("hidden", !isInActive && "flex")}
+                  />
                   <DeleteDropdownItem
                     id={discountCode.id}
                     disabled={discountCode._count.orders > 0}
