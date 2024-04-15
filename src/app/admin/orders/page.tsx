@@ -46,7 +46,7 @@ const OrdersTable = async () => {
 
   if (orders.length === 0)
     return (
-      <Card className="h-40 w-full flex items-center justify-center mt-10">
+      <Card className="h-40 md:h-96 w-full flex items-center justify-center mt-10">
         <p className="text-muted-foreground italic">No order(s) found!</p>
       </Card>
     );
