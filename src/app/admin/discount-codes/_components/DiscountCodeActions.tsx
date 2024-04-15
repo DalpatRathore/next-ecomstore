@@ -2,19 +2,20 @@
 
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { useTransition } from "react";
-import {
-  deleteProduct,
-  toggleProductAvailability,
-} from "../../_actions/product";
+
 import { useRouter } from "next/navigation";
 import { ShieldCheck, ShieldClose, Trash2 } from "lucide-react";
+import {
+  deleteDiscountCode,
+  toggleDiscountActive,
+} from "../../_actions/discountCodes";
 
 export const ActiveToggleDropdownItem = ({
   id,
-  inStock,
+  isActive,
 }: {
   id: string;
-  inStock: boolean;
+  isActive: boolean;
 }) => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
@@ -24,17 +25,17 @@ export const ActiveToggleDropdownItem = ({
       disabled={isPending}
       onClick={() => {
         startTransition(async () => {
-          await toggleProductAvailability(id, !inStock);
+          await toggleDiscountActive(id, !isActive);
           router.refresh();
         });
       }}
     >
-      {!inStock ? (
+      {!isActive ? (
         <ShieldCheck className="w-4 h-4 mr-2"></ShieldCheck>
       ) : (
         <ShieldClose className="w-4 h-4 mr-2"></ShieldClose>
       )}
-      {inStock ? "Deactive" : "Activate"}
+      {isActive ? "Deactive" : "Activate"}
     </DropdownMenuItem>
   );
 };
@@ -54,7 +55,7 @@ export const DeleteDropdownItem = ({
       disabled={disabled || isPending}
       onClick={() => {
         startTransition(async () => {
-          await deleteProduct(id);
+          await deleteDiscountCode(id);
           router.refresh();
         });
       }}

@@ -32,6 +32,10 @@ import {
   formatDiscountCode,
   formatNumber,
 } from "@/lib/formatters";
+import {
+  ActiveToggleDropdownItem,
+  DeleteDropdownItem,
+} from "./_components/DiscountCodeActions";
 
 const WHERE_EXPIRED: Prisma.DiscountCodeWhereInput = {
   OR: [
@@ -82,10 +86,10 @@ const DiscountCodes = async () => {
 
         <Link href="/admin/discount-codes/new">Add Coupons</Link>
       </div>
-      <DiscountCodesTable discountCodes={unexpiredDiscountCodes} />
+      <DiscountCodesTable discountCodes={unexpiredDiscountCodes} canDeactive />
       <div className="mt-8">
         <h2 className="text-xl font-bold">Expired Coupons</h2>
-        <DiscountCodesTable discountCodes={expiredDiscountCodes} />
+        <DiscountCodesTable discountCodes={expiredDiscountCodes} isInActive />
       </div>
     </>
   );
@@ -94,9 +98,15 @@ export default DiscountCodes;
 
 type DiscountCodesTableProps = {
   discountCodes: Awaited<ReturnType<typeof getUnexpiredDiscountCouponCodes>>;
+  isInActive?: boolean;
+  canDeactive?: boolean;
 };
 
-async function DiscountCodesTable({ discountCodes }: DiscountCodesTableProps) {
+async function DiscountCodesTable({
+  discountCodes,
+  isInActive = false,
+  canDeactive = false,
+}: DiscountCodesTableProps) {
   // if (discountCodes.length === 0)
   //   return (
   //     <Card className="h-40 md:h-96 w-full flex items-center justify-center mt-10">
@@ -127,7 +137,7 @@ async function DiscountCodesTable({ discountCodes }: DiscountCodesTableProps) {
         {discountCodes.map(discountCode => (
           <TableRow key={discountCode.id}>
             <TableCell>
-              {discountCode.isActive ? (
+              {discountCode.isActive && !isInActive ? (
                 <>
                   <span className="sr-only">Available</span>
                   <CheckCircle2 className="stroke-green-500" />
@@ -172,15 +182,17 @@ async function DiscountCodesTable({ discountCodes }: DiscountCodesTableProps) {
                   <span className="sr-only">Actions</span>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  {/* <ActiveToggleDropdownItem
-                    id={discountCode.id}
-                    inStock={discountCode.inStock}
-                  /> */}
+                  {canDeactive && (
+                    <ActiveToggleDropdownItem
+                      id={discountCode.id}
+                      isActive={discountCode.isActive}
+                    />
+                  )}
                   <DropdownMenuSeparator />
-                  {/* <DeleteDropdownItem
+                  <DeleteDropdownItem
                     id={discountCode.id}
                     disabled={discountCode._count.orders > 0}
-                  /> */}
+                  />
                 </DropdownMenuContent>
               </DropdownMenu>
             </TableCell>

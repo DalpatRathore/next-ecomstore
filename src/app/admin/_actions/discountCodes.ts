@@ -1,7 +1,7 @@
 "use server";
 import db from "@/db/db";
 import { DiscountCodeType } from "@prisma/client";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import * as z from "zod";
 
 const addFormSchema = z
@@ -67,4 +67,21 @@ export async function addDiscountCode(prevState: unknown, formData: FormData) {
   redirect("/admin/discount-codes");
 
   return {};
+}
+
+export async function toggleDiscountActive(id: string, isActive: boolean) {
+  await db.discountCode.update({
+    where: { id },
+    data: {
+      isActive,
+    },
+  });
+}
+
+export async function deleteDiscountCode(id: string) {
+  const discountCode = await db.discountCode.delete({ where: { id } });
+  if (discountCode == null) {
+    return notFound();
+  }
+  return discountCode;
 }
