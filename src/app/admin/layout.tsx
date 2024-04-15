@@ -8,6 +8,7 @@ const navLinks = [
   { href: "/admin/products", text: "Products" },
   { href: "/admin/users", text: "Customers" },
   { href: "/admin/orders", text: "Sales" },
+  { href: "/admin/discount-codes", text: "Coupons" },
 ];
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
