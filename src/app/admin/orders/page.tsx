@@ -9,12 +9,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { DollarSign, Ellipsis, MoreVertical, Receipt } from "lucide-react";
-import { formatCurrency, formatNumber } from "@/lib/formatters";
+import { formatCurrency } from "@/lib/formatters";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Card } from "@/components/ui/card";
@@ -63,7 +62,7 @@ const OrdersTable = async () => {
           <TableHead>Customer</TableHead>
           <TableHead>Price Paid</TableHead>
           <TableHead className="w-0">
-            <Ellipsis className="w-5 h-5"></Ellipsis>
+            {/* <Ellipsis className="w-5 h-5"></Ellipsis> */}
             <span className="sr-only">Actions</span>
           </TableHead>
         </TableRow>
@@ -95,8 +94,6 @@ const OrdersTable = async () => {
                   <DropdownMenuItem asChild>
                     <DeleteDropdownItem id={order.id} />
                   </DropdownMenuItem>
-
-                  <DropdownMenuSeparator />
                 </DropdownMenuContent>
               </DropdownMenu>
             </TableCell>

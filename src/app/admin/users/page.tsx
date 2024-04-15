@@ -64,7 +64,7 @@ const UsersTable = async () => {
           <TableHead>Value</TableHead>
           {/* <TableHead>Product</TableHead> */}
           <TableHead className="w-0">
-            <Ellipsis className="w-5 h-5"></Ellipsis>
+            {/* <Ellipsis className="w-5 h-5"></Ellipsis> */}
             <span className="sr-only">Actions</span>
           </TableHead>
         </TableRow>
@@ -101,8 +101,6 @@ const UsersTable = async () => {
                   <DropdownMenuItem asChild>
                     <DeleteDropdownItem id={user.id} />
                   </DropdownMenuItem>
-
-                  <DropdownMenuSeparator />
                 </DropdownMenuContent>
               </DropdownMenu>
             </TableCell>
