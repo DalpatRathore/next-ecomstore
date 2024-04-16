@@ -28,11 +28,11 @@ const PurchaseSuccessPage = async ({
   const isSuccess = paymentIntent.status === "succeeded";
 
   return (
-    <div className="w-full max-w-5xl mx-auto space-y-8">
-      <p className="text-4xl text-emerald-500">
-        {isSuccess ? "Success!" : "Error"}
+    <div className="w-full max-w-5xl mx-auto space-y-10 flex flex-col items-center justify-center">
+      <p className="text-3xl text-emerald-500 italic">
+        {isSuccess ? "Payment Successful!" : "Error"}
       </p>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center justify-center gap-4 w-full">
         <div className="relative w-1/3 flex-shrink-0 aspect-video rounded-lg overflow-hidden">
           <Image
             src={product.imagePath}
@@ -43,9 +43,7 @@ const PurchaseSuccessPage = async ({
         </div>
         <div className="space-y-5">
           <h1 className="text-2xl font-bold">{product.name}</h1>
-          <div className="text-lg">
-            {formatCurrency(product.priceInCents / 100)}
-          </div>
+
           <div className="line-clamp-3 text-muted-foreground">
             {product.description}
           </div>
