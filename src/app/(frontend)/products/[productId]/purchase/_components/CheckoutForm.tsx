@@ -1,6 +1,5 @@
 "use client";
-import { userOrderExists } from "@/actions/user-order";
-import DiscountCodes from "@/app/admin/discount-codes/page";
+import { createPaymentIntent } from "@/actions/email-order";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -40,7 +39,6 @@ type CheckoutFormProps = {
     discountAmount: number;
     discountType: DiscountCodeType;
   };
-  clientSecret: string;
 };
 
 const stripePromise = loadStripe(
@@ -81,12 +79,21 @@ const StripeForm = ({
     e.preventDefault();
     if (stripe == null || elements == null || email == null) return;
 
-    const orderExists = await userOrderExists(email, productId);
-    if (orderExists) {
-      setErrorMessage(
-        "You have already purchased this product. Try downloadin it from the My Orders page"
-      );
+    setIsLoading(true);
 
+    const formSubmit = await elements.submit();
+    if (formSubmit.error != null) {
+      setErrorMessage(formSubmit.error.message);
+      setIsLoading(false);
+      return;
+    }
+    const paymentIntent = await createPaymentIntent(
+      email,
+      productId,
+      discountCode?.id
+    );
+    if (paymentIntent.error != null) {
+      setErrorMessage(paymentIntent.error);
       setIsLoading(false);
       return;
     }
@@ -94,6 +101,7 @@ const StripeForm = ({
     stripe
       .confirmPayment({
         elements,
+        clientSecret: paymentIntent.clientSecret,
         confirmParams: {
           return_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/stripe/purchase-success`,
         },
@@ -176,11 +184,7 @@ const StripeForm = ({
   );
 };
 
-const CheckoutForm = ({
-  product,
-  clientSecret,
-  discountCode,
-}: CheckoutFormProps) => {
+const CheckoutForm = ({ product, discountCode }: CheckoutFormProps) => {
   const amount =
     discountCode == null
       ? product.priceInCents
@@ -217,9 +221,12 @@ const CheckoutForm = ({
           </div>
         </div>
       </div>
-      <Elements options={{ clientSecret }} stripe={stripePromise}>
+      <Elements
+        options={{ amount, mode: "payment", currency: "usd" }}
+        stripe={stripePromise}
+      >
         <StripeForm
-          priceIncents={product.priceInCents}
+          priceIncents={amount}
           productId={product.id}
           discountCode={discountCode}
         ></StripeForm>
