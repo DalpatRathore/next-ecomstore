@@ -81,7 +81,7 @@ model DiscountCode {
 
 }
 
-enum DiscountCodeType{
+enum DiscountCodeType {
   PERCENTAGE
   FIXED
 }
