@@ -32,7 +32,9 @@ const ProductForm = ({ product }: { product?: Product | null }) => {
           required
           defaultValue={product?.name || ""}
         ></Input>
-        {error.name && <div className="text-destructive">{error.name}</div>}
+        {error && error.name && (
+          <div className="text-destructive">{error.name}</div>
+        )}
       </div>
 
       <div className="w-full space-y-2">
@@ -51,7 +53,7 @@ const ProductForm = ({ product }: { product?: Product | null }) => {
             {formatCurrency((priceInCents || 0) / 100)}
           </div>
         </div>
-        {error.priceInCents && (
+        {error && error.priceInCents && (
           <div className="text-destructive">{error.priceInCents}</div>
         )}
       </div>
@@ -64,7 +66,7 @@ const ProductForm = ({ product }: { product?: Product | null }) => {
           defaultValue={product?.description || ""}
           placeholder="Type your product description here."
         ></Textarea>
-        {error.description && (
+        {error && error.description && (
           <div className="text-destructive">{error.description}</div>
         )}
       </div>
@@ -79,7 +81,9 @@ const ProductForm = ({ product }: { product?: Product | null }) => {
         {product !== null && (
           <div className="text-muted-foreground">{product?.filePath}</div>
         )}
-        {error.file && <div className="text-destructive">{error.file}</div>}
+        {error && error.file && (
+          <div className="text-destructive">{error.file}</div>
+        )}
       </div>
       <div className="space-y-2">
         <Label htmlFor="image">Image</Label>
@@ -98,7 +102,9 @@ const ProductForm = ({ product }: { product?: Product | null }) => {
             className="rounded-md mx-auto"
           />
         )}
-        {error.image && <div className="text-destructive">{error.image}</div>}
+        {error && error.image && (
+          <div className="text-destructive">{error.image}</div>
+        )}
       </div>
       <SubmitButton></SubmitButton>
     </form>

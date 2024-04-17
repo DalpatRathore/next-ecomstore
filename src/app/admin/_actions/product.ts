@@ -14,8 +14,8 @@ const imageSchema = fileSchema.refine(
 );
 
 const addFormSchema = z.object({
-  name: z.string().min(1),
-  description: z.string().min(1),
+  name: z.string().min(1).trim(),
+  description: z.string().min(1).trim(),
   priceInCents: z.coerce.number().int().min(1),
   file: fileSchema.refine(file => file.size > 0, "File is required"),
   image: imageSchema.refine(file => file.size > 0, "Image required"),
