@@ -12,13 +12,26 @@ const fileSchema = z.instanceof(File, { message: "Required" });
 const imageSchema = fileSchema.refine(
   file => file.size === 0 || file.type.startsWith("image/")
 );
+const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024; // 2 MB
 
 const addFormSchema = z.object({
   name: z.string().min(1).trim(),
   description: z.string().min(1).trim(),
   priceInCents: z.coerce.number().int().min(1),
-  file: fileSchema.refine(file => file.size > 0, "File is required"),
-  image: imageSchema.refine(file => file.size > 0, "Image required"),
+  file: fileSchema.refine(
+    file => {
+      // Check if the file exists and its size is within the allowed limit
+      return file && file.size > 0 && file.size <= MAX_FILE_SIZE_BYTES;
+    },
+    { message: `File size must be less than ${MAX_FILE_SIZE_BYTES} bytes` }
+  ),
+  image: imageSchema.refine(
+    file => {
+      // Check if the file exists and its size is within the allowed limit
+      return file && file.size > 0 && file.size <= MAX_FILE_SIZE_BYTES;
+    },
+    { message: `Image size must be less than ${MAX_FILE_SIZE_BYTES} bytes` }
+  ),
 });
 
 export async function addProduct(prevState: unknown, formData: FormData) {
