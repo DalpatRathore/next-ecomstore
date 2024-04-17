@@ -1,6 +1,6 @@
+import ReactConfetti from "@/components/ReactConfetti";
 import { Button } from "@/components/ui/button";
 import db from "@/db/db";
-import { formatCurrency } from "@/lib/formatters";
 import { Download } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -29,6 +29,7 @@ const PurchaseSuccessPage = async ({
 
   return (
     <div className="w-full max-w-5xl mx-auto space-y-10 flex flex-col items-center justify-center">
+      <ReactConfetti></ReactConfetti>
       <p className="text-3xl text-emerald-500 italic">
         {isSuccess ? "Payment Successful!" : "Error"}
       </p>
